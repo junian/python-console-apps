@@ -8,7 +8,7 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.options import Options as ChromeOptions
 from selenium.webdriver.support.ui import WebDriverWait
-import keyboard
+from pynput.keyboard import Key, Controller
 from selenium.webdriver.support import expected_conditions as EC
 
 
@@ -25,6 +25,8 @@ from os import system, name as OSNAME
 # ? Rich --> For a box and loading bar
 from rich import print
 from rich.console import Console
+
+keyboard = Controller()
 
 console = Console()
 from rich.panel import Panel
