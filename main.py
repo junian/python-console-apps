@@ -46,6 +46,7 @@ def setSelenium():
     global allNames, chromeOptions
     chromeOptions = ChromeOptions()
     chromeOptions.add_argument("--headless=new")
+    chromeOptions.add_argument('--no-sandbox')
     chromeOptions.add_experimental_option("detach", True)
     chromeOptions.add_argument("--use-fake-ui-for-media-stream")
     prefs = {"profile.managed_default_content_settings.images": 2}
