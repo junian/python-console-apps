@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 # Starting of the program
 ############## ! Imports ##############
 # ? Selenium --> For interacting with the web browser
