@@ -37,6 +37,8 @@ from rich.progress import (
 )
 from rich.align import Align
 
+def is_null_or_whitespace(s):
+    return s is None or s.strip() == ''
 
 ############## ! Functions ##############
 # * Initializing selenium with Chrome settings
@@ -78,13 +80,17 @@ def idPass(id=None, password=None):
     # ? Creating a loop for all the names provided
     for name in allNames:
 
+        if is_null_or_whitespace(name):
+            continue
+        
+        try:
         driver = webdriver.Chrome(options=chromeOptions)
         # ? Opening the website
         driver.get(
-            f"https://zoom.us/wc/{id}/join?from=join&_x_zm_rtaid=ws81SA1uSGuB2O6_Sekbbg.1690523013218.d0e8a870b0195ee064d41de484bdd657&_x_zm_rhtaid=508"
+                f"https://app.zoom.us/wc/{id}/join?from=pwa"
         )
         sleep(0.5)
-        driver.switch_to.frame(driver.find_element(By.TAG_NAME,"iframe"))
+            #driver.switch_to.frame(driver.find_element(By.TAG_NAME,"iframe"))
         # ? Entering password
         pwd = driver.find_element(By.ID, "input-for-pwd")
         pwd.clear()
@@ -98,12 +104,16 @@ def idPass(id=None, password=None):
         # ? Joining audio and muting mic
         audioButton = driver.find_element(By.ID, "preview-audio-control-button")
         audioButton.click()
-        sleep(0.1)
+            sleep(1)
+            audioButton2 = driver.find_element(By.ID, "preview-audio-control-button")
+            audioButton2.click()
+            sleep(1)
         audioButton2 = driver.find_element(By.ID, "preview-audio-control-button")
         audioButton2.click()
         user.send_keys(Keys.RETURN)
-
-
+            sleep(1)
+        except Exception as e:
+            print("Error handling Zoom prompt:", str(e))
             
 
 
