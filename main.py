@@ -7,10 +7,11 @@ from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.options import Options as ChromeOptions
+from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.support.ui import WebDriverWait
 # from pynput.keyboard import Key, Controller
 from selenium.webdriver.support import expected_conditions as EC
-
+from webdriver_manager.chrome import ChromeDriverManager
 
 # ? Time --> For pausing the program
 from time import sleep
@@ -46,6 +47,7 @@ def setSelenium():
     global allNames, chromeOptions
     chromeOptions = ChromeOptions()
     chromeOptions.add_argument("--headless=new")
+    chromeOptions.add_argument('--disable-dev-shm-usage')
     chromeOptions.add_experimental_option("detach", True)
     chromeOptions.add_argument("--use-fake-ui-for-media-stream")
     prefs = {"profile.managed_default_content_settings.images": 2}
@@ -85,7 +87,7 @@ def idPass(id=None, password=None):
             continue
         
         try:
-            driver = webdriver.Chrome(options=chromeOptions)
+            driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=chromeOptions)
             # ? Opening the website
             driver.get(
                     f"https://app.zoom.us/wc/{id}/join?from=pwa"
