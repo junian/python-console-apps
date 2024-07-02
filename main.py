@@ -10,6 +10,8 @@ from selenium.webdriver.chrome.options import Options as ChromeOptions
 from selenium.webdriver.support.ui import WebDriverWait
 # from pynput.keyboard import Key, Controller
 from selenium.webdriver.support import expected_conditions as EC
+import concurrent.futures
+import time
 
 
 # ? Time --> For pausing the program
@@ -27,6 +29,8 @@ from rich import print
 from rich.console import Console
 
 # keyboard = Controller()
+globalId = ""
+globalPassword = ""
 
 console = Console()
 from rich.panel import Panel
@@ -44,6 +48,7 @@ def is_null_or_whitespace(s):
 # * Initializing selenium with Chrome settings
 def setSelenium():
     global allNames, chromeOptions
+
     chromeOptions = ChromeOptions()
     chromeOptions.add_argument("--headless=new")
     chromeOptions.add_argument('--no-sandbox')
@@ -67,6 +72,8 @@ def clickJoinFromBrowser(driver):
 
 # * Function if user selected ID and Password method
 def idPass(id=None, password=None):
+    global globalId, globalPassword
+
     # ? If ID is not provided
     if id == None:
         id = text("Enter Zoom Meeting ID:", style=minimalStyle).ask().replace(' ', '')
@@ -74,49 +81,60 @@ def idPass(id=None, password=None):
     else:
         # ? If ID is provided
         id = int(str(id.replace(" ", "")))
+    
+    globalId = id
 
     # ? If password is not provided
     if password == None:
         password = text("Enter Zoom Meeting Password:", style=minimalStyle).ask()
 
-    # ? Creating a loop for all the names provided
-    for name in allNames:
+    globalPassword = password
 
-        if is_null_or_whitespace(name):
-            continue
+    # Define the maximum number of threads
+    max_threads = 16
+
+    # Use a ThreadPoolExecutor to manage the threads
+    with concurrent.futures.ThreadPoolExecutor(max_workers=max_threads) as executor:
+        # Map the process_data function to the data_list
+        results = list(executor.map(process_data, allNames))
+
+    print("All threads have finished processing.")
+
+def process_data(name):
+    if is_null_or_whitespace(name):
+        return
+    
+    try:
+        driver = webdriver.Chrome(options=chromeOptions)
+        # ? Opening the website
+        targetUrl=f"https://app.zoom.us/wc/{globalId}/join?from=pwa"
+        print(targetUrl)
+        driver.get(targetUrl)
+        sleep(0.25)
+            #driver.switch_to.frame(driver.find_element(By.TAG_NAME,"iframe"))
+        # ? Entering password
+        pwd = driver.find_element(By.ID, "input-for-pwd")
+        pwd.clear()
+        pwd.send_keys(globalPassword)
         
-        try:
-            driver = webdriver.Chrome(options=chromeOptions)
-            # ? Opening the website
-            driver.get(
-                    f"https://app.zoom.us/wc/{id}/join?from=pwa"
-            )
-            sleep(0.25)
-                #driver.switch_to.frame(driver.find_element(By.TAG_NAME,"iframe"))
-            # ? Entering password
-            pwd = driver.find_element(By.ID, "input-for-pwd")
-            pwd.clear()
-            pwd.send_keys(password)
-            
-            # ? Entering name
-            user = driver.find_element(By.ID, "input-for-name")
-            user.clear()
-            user.send_keys(name)
+        # ? Entering name
+        user = driver.find_element(By.ID, "input-for-name")
+        user.clear()
+        user.send_keys(name)
 
-            # ? Joining audio and muting mic
-            audioButton = driver.find_element(By.ID, "preview-audio-control-button")
-            audioButton.click()
-            sleep(0.1)
-            audioButton2 = driver.find_element(By.ID, "preview-audio-control-button")
-            audioButton2.click()
-            sleep(0.1)
-            audioButton2 = driver.find_element(By.ID, "preview-audio-control-button")
-            audioButton2.click()
-            user.send_keys(Keys.RETURN)
-            sleep(0.1)
-        except Exception as e:
-            print("Error handling Zoom prompt:", str(e))
-            
+        # ? Joining audio and muting mic
+        audioButton = driver.find_element(By.ID, "preview-audio-control-button")
+        audioButton.click()
+        sleep(0.1)
+        audioButton2 = driver.find_element(By.ID, "preview-audio-control-button")
+        audioButton2.click()
+        sleep(0.1)
+        audioButton2 = driver.find_element(By.ID, "preview-audio-control-button")
+        audioButton2.click()
+        user.send_keys(Keys.RETURN)
+        sleep(0.1)
+    except Exception as e:
+        print("Error handling Zoom prompt:", str(e))
 
 
 
@@ -181,7 +199,7 @@ def StatBar(time: float, desc: str):
     )
     with progress_bar as p:
         for i in p.track(range(100), description=desc):
-            sleep(time / 100)
+            sleep(time / 1000)
     sleep(0.5)
 
 
