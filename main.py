@@ -84,33 +84,33 @@ def idPass(id=None, password=None):
             continue
         
         try:
-        driver = webdriver.Chrome(options=chromeOptions)
-        # ? Opening the website
-        driver.get(
-                f"https://app.zoom.us/wc/{id}/join?from=pwa"
-        )
-        sleep(0.5)
-            #driver.switch_to.frame(driver.find_element(By.TAG_NAME,"iframe"))
-        # ? Entering password
-        pwd = driver.find_element(By.ID, "input-for-pwd")
-        pwd.clear()
-        pwd.send_keys(password)
-        
-        # ? Entering name
-        user = driver.find_element(By.ID, "input-for-name")
-        user.clear()
-        user.send_keys(name)
+            driver = webdriver.Chrome(options=chromeOptions)
+            # ? Opening the website
+            driver.get(
+                    f"https://app.zoom.us/wc/{id}/join?from=pwa"
+            )
+            sleep(0.5)
+                #driver.switch_to.frame(driver.find_element(By.TAG_NAME,"iframe"))
+            # ? Entering password
+            pwd = driver.find_element(By.ID, "input-for-pwd")
+            pwd.clear()
+            pwd.send_keys(password)
+            
+            # ? Entering name
+            user = driver.find_element(By.ID, "input-for-name")
+            user.clear()
+            user.send_keys(name)
 
-        # ? Joining audio and muting mic
-        audioButton = driver.find_element(By.ID, "preview-audio-control-button")
-        audioButton.click()
+            # ? Joining audio and muting mic
+            audioButton = driver.find_element(By.ID, "preview-audio-control-button")
+            audioButton.click()
             sleep(1)
             audioButton2 = driver.find_element(By.ID, "preview-audio-control-button")
             audioButton2.click()
             sleep(1)
-        audioButton2 = driver.find_element(By.ID, "preview-audio-control-button")
-        audioButton2.click()
-        user.send_keys(Keys.RETURN)
+            audioButton2 = driver.find_element(By.ID, "preview-audio-control-button")
+            audioButton2.click()
+            user.send_keys(Keys.RETURN)
             sleep(1)
         except Exception as e:
             print("Error handling Zoom prompt:", str(e))
