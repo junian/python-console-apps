@@ -8,7 +8,7 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.options import Options as ChromeOptions
 from selenium.webdriver.support.ui import WebDriverWait
-from pynput.keyboard import Key, Controller
+# from pynput.keyboard import Key, Controller
 from selenium.webdriver.support import expected_conditions as EC
 
 
@@ -26,7 +26,7 @@ from os import system, name as OSNAME
 from rich import print
 from rich.console import Console
 
-keyboard = Controller()
+# keyboard = Controller()
 
 console = Console()
 from rich.panel import Panel
@@ -142,7 +142,7 @@ def link(link="https://learn.zoom.us/j/94950913565?pwd=LzhoOVdybFBKVWVwOU9za3Ywd
 
 
         driver.execute_script("document.getElementsByClassName('mbTuDeF1')[0].click();")
-        keyboard.press_and_release('enter')
+        # keyboard.press_and_release('enter')
         driver.execute_script("document.getElementsByTagName('a')[6].click();")
 
 
