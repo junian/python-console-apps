@@ -91,7 +91,7 @@ def idPass(id=None, password=None):
             driver.get(
                     f"https://app.zoom.us/wc/{id}/join?from=pwa"
             )
-            sleep(0.5)
+            sleep(0.25)
                 #driver.switch_to.frame(driver.find_element(By.TAG_NAME,"iframe"))
             # ? Entering password
             pwd = driver.find_element(By.ID, "input-for-pwd")
@@ -106,14 +106,14 @@ def idPass(id=None, password=None):
             # ? Joining audio and muting mic
             audioButton = driver.find_element(By.ID, "preview-audio-control-button")
             audioButton.click()
-            sleep(1)
+            sleep(0.1)
             audioButton2 = driver.find_element(By.ID, "preview-audio-control-button")
             audioButton2.click()
-            sleep(1)
+            sleep(0.1)
             audioButton2 = driver.find_element(By.ID, "preview-audio-control-button")
             audioButton2.click()
             user.send_keys(Keys.RETURN)
-            sleep(1)
+            sleep(0.1)
         except Exception as e:
             print("Error handling Zoom prompt:", str(e))
             
