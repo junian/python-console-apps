@@ -197,8 +197,6 @@ Zachary
 Abhinav
 Bianca
 Carlos
-Here's the list with "@" included for usernames:
-
 John Smith
 Emma
 @jdoe23
@@ -293,3 +291,10 @@ Tyler Cameron
 Jack Dorsey
 @BitcoinBeliever
 Katherine Green
+Penelope Paula
+Azura T.
+Miss Blockchain
+@BlockchainGoGoGo
+Mister Crypto
+Alan Twink
+Cook Paula
