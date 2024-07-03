@@ -106,9 +106,9 @@ def idPass(id=None, password=None):
 def process_data(loop):
     #if is_null_or_whitespace(name):
     #    return
-    
+    driver = webdriver.Chrome(options=chromeOptions)
+
     try:
-        driver = webdriver.Chrome(options=chromeOptions)
         # ? Opening the website
         targetUrl=f"https://app.zoom.us/wc/{globalId}/join?from=pwa"
         print(targetUrl)
@@ -138,6 +138,10 @@ def process_data(loop):
         sleep(0.1)
     except Exception as e:
         print("Error handling Zoom prompt:", str(e))
+        driver.quit()
+        return None
+    
+    return driver
 
 
 
