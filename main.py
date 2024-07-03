@@ -88,8 +88,8 @@ def idPass(id=None, password=None):
     if password == None:
         password = text("Enter Zoom Meeting Password:", style=minimalStyle).ask()
 
-    answer = text("Enter Number of Zoom Meeting Participants:", style=minimalStyle).ask()
-    numberOfParticipants = int(answer)
+    # answer = text("Enter Number of Zoom Meeting Participants:", style=minimalStyle).ask()
+    # numberOfParticipants = int(answer)
 
     globalPassword = password
 
@@ -99,13 +99,14 @@ def idPass(id=None, password=None):
     # Use a ThreadPoolExecutor to manage the threads
     with concurrent.futures.ThreadPoolExecutor(max_workers=max_threads) as executor:
         # Map the process_data function to the data_list
-        results = list(executor.map(process_data, range(numberOfParticipants)))
+        results = list(executor.map(process_data, allNames))
 
     print("All threads have finished processing.")
 
-def process_data(loop):
-    #if is_null_or_whitespace(name):
-    #    return
+def process_data(name):
+    if is_null_or_whitespace(name):
+        return
+    
     driver = webdriver.Chrome(options=chromeOptions)
 
     try:
@@ -123,7 +124,7 @@ def process_data(loop):
         # ? Entering name
         user = driver.find_element(By.ID, "input-for-name")
         user.clear()
-        user.send_keys(names.get_full_name())
+        user.send_keys(name)
 
         # ? Joining audio and muting mic
         audioButton = driver.find_element(By.ID, "preview-audio-control-button")
