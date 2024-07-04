@@ -13,6 +13,7 @@ from selenium.webdriver.support import expected_conditions as EC
 import concurrent.futures
 import time
 import names
+import random
 
 # ? Time --> For pausing the program
 from time import sleep
@@ -58,6 +59,7 @@ def setSelenium():
     chromeOptions.add_experimental_option("prefs", prefs)
     # ? Reading all the names from 'names.txt'
     allNames = open("names.txt", "r").read().split("\n")
+    random.shuffle(allNames)
 
 
 # * Clicking join from browser on the page
@@ -88,8 +90,8 @@ def idPass(id=None, password=None):
     if password == None:
         password = text("Enter Zoom Meeting Password:", style=minimalStyle).ask()
 
-    # answer = text("Enter Number of Zoom Meeting Participants:", style=minimalStyle).ask()
-    # numberOfParticipants = int(answer)
+    answer = text("Enter Number of Zoom Meeting Participants:", style=minimalStyle).ask()
+    numberOfParticipants = int(answer)
 
     globalPassword = password
 
@@ -99,7 +101,7 @@ def idPass(id=None, password=None):
     # Use a ThreadPoolExecutor to manage the threads
     with concurrent.futures.ThreadPoolExecutor(max_workers=max_threads) as executor:
         # Map the process_data function to the data_list
-        results = list(executor.map(process_data, allNames))
+        results = list(executor.map(process_data, allNames[:numberOfParticipants]))
 
     print("All threads have finished processing.")
 
