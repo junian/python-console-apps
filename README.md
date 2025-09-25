@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="https://upload.wikimedia.org/wikipedia/commons/c/c3/Python-logo-notext.svg" width="96px">
+<img src="https://raw.githubusercontent.com/junian/commons-media/refs/heads/master/svg/python-logo-notext.svg" height="128px" />
 
 # Python Console Apps
 
