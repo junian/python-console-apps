@@ -1,10 +1,6 @@
 # ZoomBulkJoiner 
+
 Multi-Participant Zoom Meeting Script
-
-![image](https://github.com/eXtizi/ZoomBulkJoiner/assets/75202685/0cb71466-9581-4aaf-8d10-6b362521f963)
-
-
-
 
 ZoomBulkJoiner is a Python and Selenium-based script that enables users to join a Zoom meeting with multiple instances, using different names. Whether you have a Zoom meeting link or an ID with a passcode, this script allows you to create a virtual army of participants, giving the illusion of a larger attendance. Perfect for pranks, simulations, or any situation where you want to fake participants. Embrace the power of ZoomJoiner and create the ultimate virtual gathering!
 
@@ -48,7 +44,9 @@ It can be installed using https://www.google.com/chrome/
 - Cookies Accepting Function
   
 ### Credits:
-https://github.com/AverageBlank/ZoomBomber
+
+- https://github.com/eXtizi/ZoomBulkJoiner/
+- https://github.com/AverageBlank/ZoomBomber
 
 ```
 Note : Program may contain Bugs, and only tested the joining from link option. please proceed with care and modify the code to suite your need.
